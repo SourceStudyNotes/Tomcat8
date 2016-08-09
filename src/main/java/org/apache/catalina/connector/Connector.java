@@ -43,6 +43,9 @@ import org.apache.tomcat.util.res.StringManager;
  *
  * @author Craig R. McClanahan
  * @author Remy Maucherat
+ *
+ * 通过反射注入各种类型的connector
+ *
  */
 public class Connector extends LifecycleMBeanBase  {
 
@@ -556,6 +559,8 @@ public class Connector extends LifecycleMBeanBase  {
 
     /**
      * Set the Coyote protocol which will be used by the connector.
+     *
+     * 不同的协议对应不同的协议处理器。
      *
      * @param protocol The Coyote protocol name
      */

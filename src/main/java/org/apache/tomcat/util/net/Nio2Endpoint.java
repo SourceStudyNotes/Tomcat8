@@ -862,7 +862,7 @@ public class Nio2Endpoint extends AbstractEndpoint<Nio2Channel> {
             return flag.booleanValue();
         }
     }
-
+    //异步的等待后续数据的到来
     public void awaitBytes(SocketWrapper<Nio2Channel> socket) {
         if (socket == null || socket.getSocket() == null) {
             return;
