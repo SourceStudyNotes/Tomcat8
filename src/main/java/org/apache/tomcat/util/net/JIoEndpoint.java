@@ -342,7 +342,7 @@ public class JIoEndpoint extends AbstractEndpoint<Socket> {
         // Initialize maxConnections
         if (getMaxConnections() == 0) {
             // User hasn't set a value - use the default
-            setMaxConnections(getMaxThreadsExecutor(true));
+            setMaxConnections(getMaxThreadsExecutor(true));//bio模式下，可以处理的最大连接数就是线程池的大小。
         }
 
         if (serverSocketFactory == null) {
