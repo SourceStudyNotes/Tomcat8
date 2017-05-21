@@ -68,7 +68,8 @@
     -->
     <Connector port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol"
                connectionTimeout="20000"
-               redirectPort="8443" acceptCount="1" maxThreads="1"/>
+               redirectPort="8443" acceptCount="1" maxThreads="5"/>
+    <!--Nio情况下 maxConnection默认为1000，Bio情况下maxConnection为 maxThreads，为线程池大小-->
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
@@ -132,9 +133,9 @@
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
-        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-               prefix="localhost_access_log" suffix=".txt"
-               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+        <!--<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"-->
+               <!--prefix="localhost_access_log" suffix=".txt"-->
+               <!--pattern="%h %l %u %t &quot;%r&quot; %s %b" />-->
 
       </Host>
     </Engine>
