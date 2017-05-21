@@ -115,7 +115,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
      * Make sure this string has already been allocated
      */
     private static final String oomParachuteMsg =
-        "SEVERE:Memory usage is low, parachute is non existent, your system may start failing.";
+            "SEVERE:Memory usage is low, parachute is non existent, your system may start failing.";
 
     /**
      * Keep track of OOM warning messages.
@@ -361,7 +361,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     sslUtil.getTrustManagers(), null);
 
             SSLSessionContext sessionContext =
-                sslContext.getServerSessionContext();
+                    sslContext.getServerSessionContext();
             if (sessionContext != null) {
                 sslUtil.configureSessionContext(sessionContext);
             }
@@ -406,7 +406,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
                     socketProperties.getProcessorCache());
             eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                            socketProperties.getEventCache());
+                    socketProperties.getEventCache());
             nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
                     socketProperties.getBufferPool());
 
@@ -531,7 +531,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             socket.configureBlocking(false);
             Socket sock = socket.socket();
             socketProperties.setProperties(sock);
-
+            log.debug(String.format("Mat-->setSocketOptions:{0}",socketProperties.toString()));
             NioChannel channel = nioChannels.pop();
             if ( channel == null ) {
                 // SSL setup
@@ -539,14 +539,14 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     SSLEngine engine = createSSLEngine();
                     int appbufsize = engine.getSession().getApplicationBufferSize();
                     NioBufferHandler bufhandler = new NioBufferHandler(Math.max(appbufsize,socketProperties.getAppReadBufSize()),
-                                                                       Math.max(appbufsize,socketProperties.getAppWriteBufSize()),
-                                                                       socketProperties.getDirectBuffer());
+                            Math.max(appbufsize,socketProperties.getAppWriteBufSize()),
+                            socketProperties.getDirectBuffer());
                     channel = new SecureNioChannel(socket, engine, bufhandler, selectorPool);
                 } else {
                     // normal tcp setup
                     NioBufferHandler bufhandler = new NioBufferHandler(socketProperties.getAppReadBufSize(),
-                                                                       socketProperties.getAppWriteBufSize(),
-                                                                       socketProperties.getDirectBuffer());
+                            socketProperties.getAppWriteBufSize(),
+                            socketProperties.getDirectBuffer());
 
                     channel = new NioChannel(socket, bufhandler);
                 }
@@ -604,7 +604,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
     @Override
     public void processSocket(SocketWrapper<NioChannel> socketWrapper,
-            SocketStatus socketStatus, boolean dispatch) {
+                              SocketStatus socketStatus, boolean dispatch) {
         processSocket((KeyAttachment) socketWrapper, socketStatus, dispatch);
     }
 
@@ -618,8 +618,10 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             else sc.reset(attachment, status);
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
+                log.debug(String.format("Mat-->ProcessSocket {0} in executor {1}",sc.ka.getSocket().toString(),executor.toString()));
                 executor.execute(sc);
             } else {
+                log.debug(String.format("Mat-->ProcessSocket {0} in {1}",sc.ka.getSocket().toString(),this.toString()));
                 sc.run();
             }
         } catch (RejectedExecutionException ree) {
@@ -680,6 +682,8 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         // Accept the next incoming connection from the server
                         // socket
                         socket = serverSock.accept();
+                        log.debug(String.format("Mat-->Accept new connection:{0}",socket));
+
                     } catch (IOException ioe) {
                         //we didn't get a socket
                         countDownConnection();
@@ -781,9 +785,11 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
         @Override
         public void run() {
+            log.debug(String.format("Mat-->Run poller event {}",this.toString()));
             if ( interestOps == OP_REGISTER ) {
                 try {
                     socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);
+
                 } catch (Exception x) {
                     log.error("", x);
                 }
@@ -923,7 +929,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             socket.setPoller(this);
             KeyAttachment ka = new KeyAttachment(socket);
             ka.setPoller(this);
-            ka.setTimeout(getSocketProperties().getSoTimeout());
+            ka.setTimeout(getSocketProperties().getSoTimeout());//异步使用时等待数据的时长
             ka.setKeepAliveLeft(NioEndpoint.this.getMaxKeepAliveRequests());
             ka.setSecure(isSSLEnabled());
             PollerEvent r = eventCache.pop();
@@ -931,6 +937,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
             else r.reset(socket,ka,OP_REGISTER);
             addEvent(r);
+            log.debug(String.format("Mat-->Registers a newly created socket with the poller {0}.KeyAttachment.interestOps {1}.PollerEvent.intOps {2}",this.toString(),"OP_READ","OP_REGISTER"));
         }
 
         public KeyAttachment cancelledKey(SelectionKey key, SocketStatus status) {
@@ -1055,7 +1062,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     if ( keyCount == 0 ) hasEvents = (hasEvents | events());
 
                     Iterator<SelectionKey> iterator =
-                        keyCount > 0 ? selector.selectedKeys().iterator() : null;
+                            keyCount > 0 ? selector.selectedKeys().iterator() : null;
                     // Walk through the collection of ready keys and dispatch
                     // any active event.
                     while (iterator != null && iterator.hasNext()) {
@@ -1158,7 +1165,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         return false;
                     }
                     @SuppressWarnings("resource") // Closed when channel is closed
-                    FileInputStream fis = new FileInputStream(f);
+                            FileInputStream fis = new FileInputStream(f);
                     sd.fchannel = fis.getChannel();
                 }
 
@@ -1197,14 +1204,14 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     } catch (Exception ignore) {
                     }
                     if ( sd.keepAlive ) {
-                            if (log.isDebugEnabled()) {
-                                log.debug("Connection is keep alive, registering back for OP_READ");
-                            }
-                            if (event) {
-                                this.add(attachment.getSocket(),SelectionKey.OP_READ);
-                            } else {
-                                reg(sk,attachment,SelectionKey.OP_READ);
-                            }
+                        if (log.isDebugEnabled()) {
+                            log.debug("Connection is keep alive, registering back for OP_READ");
+                        }
+                        if (event) {
+                            this.add(attachment.getSocket(),SelectionKey.OP_READ);
+                        } else {
+                            reg(sk,attachment,SelectionKey.OP_READ);
+                        }
                     } else {
                         if (log.isDebugEnabled()) {
                             log.debug("Send file connection is being closed");
@@ -1268,7 +1275,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         if ( ka == null ) {
                             cancelledKey(key, SocketStatus.ERROR); //we don't support any keys without attachments
                         } else if ((ka.interestOps()&SelectionKey.OP_READ) == SelectionKey.OP_READ ||
-                                  (ka.interestOps()&SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE) {
+                                (ka.interestOps()&SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE) {
                             //only timeout sockets that we are waiting for a read from
                             long delta = now - ka.getLastAccess();
                             long timeout = ka.getTimeout();
@@ -1320,7 +1327,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
         }
     }
 
-// ----------------------------------------------------- Key Attachment Class
+    // ----------------------------------------------------- Key Attachment Class
     public static class KeyAttachment extends SocketWrapper<NioChannel> {
 
         public KeyAttachment(NioChannel channel) {
@@ -1414,7 +1421,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
      */
     public interface Handler extends AbstractEndpoint.Handler {
         public SocketState process(SocketWrapper<NioChannel> socket,
-                SocketStatus status);
+                                   SocketStatus status);
         public void release(SocketWrapper<NioChannel> socket);
         public void release(SocketChannel socket);
         public SSLImplementation getSslImplementation();

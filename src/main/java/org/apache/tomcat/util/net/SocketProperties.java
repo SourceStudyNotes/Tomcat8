@@ -445,5 +445,32 @@ public class SocketProperties {
         this.unlockTimeout = unlockTimeout;
     }
 
-
+    @Override
+    public String toString() {
+        return "SocketProperties{" +
+                "socketWrapperCache=" + socketWrapperCache +
+                ", processorCache=" + processorCache +
+                ", eventCache=" + eventCache +
+                ", directBuffer=" + directBuffer +
+                ", directSslBuffer=" + directSslBuffer +
+                ", rxBufSize=" + rxBufSize +
+                ", txBufSize=" + txBufSize +
+                ", appReadBufSize=" + appReadBufSize +
+                ", appWriteBufSize=" + appWriteBufSize +
+                ", bufferPool=" + bufferPool +
+                ", bufferPoolSize=" + bufferPoolSize +
+                ", tcpNoDelay=" + tcpNoDelay +
+                ", soKeepAlive=" + soKeepAlive +
+                ", ooBInline=" + ooBInline +
+                ", soReuseAddress=" + soReuseAddress +
+                ", soLingerOn=" + soLingerOn +
+                ", soLingerTime=" + soLingerTime +
+                ", soTimeout=" + soTimeout +
+                ", performanceConnectionTime=" + performanceConnectionTime +
+                ", performanceLatency=" + performanceLatency +
+                ", performanceBandwidth=" + performanceBandwidth +
+                ", timeoutInterval=" + timeoutInterval +
+                ", unlockTimeout=" + unlockTimeout +
+                '}';
+    }
 }
