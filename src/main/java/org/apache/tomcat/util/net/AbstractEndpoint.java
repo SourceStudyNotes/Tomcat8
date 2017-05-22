@@ -36,6 +36,7 @@ import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLParameters;
 
 import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.IntrospectionUtils;
 import org.apache.tomcat.util.net.AbstractEndpoint.Acceptor.AcceptorState;
 import org.apache.tomcat.util.res.StringManager;
@@ -50,6 +51,8 @@ import org.apache.tomcat.util.threads.ThreadPoolExecutor;
  * @author Remy Maucherat
  */
 public abstract class AbstractEndpoint<S> {
+
+    private static final Log log = LogFactory.getLog(AbstractEndpoint.class);
 
     // -------------------------------------------------------------- Constants
 
@@ -849,12 +852,14 @@ public abstract class AbstractEndpoint<S> {
     }
 
     protected void countUpOrAwaitConnection() throws InterruptedException {
+        log.debug(String.format("Mat-->CountUpOrAwaitConnection maxConnections %s,connectionLimitLatch %s",maxConnections,connectionLimitLatch.getCount()));
         if (maxConnections==-1) return;
         LimitLatch latch = connectionLimitLatch;
         if (latch!=null) latch.countUpOrAwait();
     }
 
     protected long countDownConnection() {
+        log.debug(String.format("Mat-->CountDownConnection maxConnections %s,connectionLimitLatch %s",maxConnections,connectionLimitLatch.getCount()));
         if (maxConnections==-1) return -1;
         LimitLatch latch = connectionLimitLatch;
         if (latch!=null) {

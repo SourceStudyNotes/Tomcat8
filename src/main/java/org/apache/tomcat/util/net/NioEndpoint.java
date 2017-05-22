@@ -531,7 +531,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             socket.configureBlocking(false);
             Socket sock = socket.socket();
             socketProperties.setProperties(sock);
-            log.debug(String.format("Mat-->setSocketOptions:{0}",socketProperties.toString()));
+            log.debug(String.format("Mat-->setSocketOptions:%s",socketProperties.toString()));
             NioChannel channel = nioChannels.pop();
             if ( channel == null ) {
                 // SSL setup
@@ -618,10 +618,10 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             else sc.reset(attachment, status);
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
-                log.debug(String.format("Mat-->ProcessSocket {0} in executor {1}",sc.ka.getSocket().toString(),executor.toString()));
+                log.debug(String.format("Mat-->ProcessSocket %s in executor %s",sc.ka.getSocket().toString(),executor.toString()));
                 executor.execute(sc);
             } else {
-                log.debug(String.format("Mat-->ProcessSocket {0} in {1}",sc.ka.getSocket().toString(),this.toString()));
+                log.debug(String.format("Mat-->ProcessSocket %s in %s",sc.ka.getSocket().toString(),this.toString()));
                 sc.run();
             }
         } catch (RejectedExecutionException ree) {
@@ -682,7 +682,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         // Accept the next incoming connection from the server
                         // socket
                         socket = serverSock.accept();
-                        log.debug(String.format("Mat-->Accept new connection:{0}",socket));
+                        log.debug(String.format("Mat-->Accept new connection:%s",socket));
 
                     } catch (IOException ioe) {
                         //we didn't get a socket
@@ -785,7 +785,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
         @Override
         public void run() {
-            log.debug(String.format("Mat-->Run poller event {}",this.toString()));
+            log.debug(String.format("Mat-->Run poller event %s",this.toString()));
             if ( interestOps == OP_REGISTER ) {
                 try {
                     socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);
@@ -937,10 +937,11 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
             else r.reset(socket,ka,OP_REGISTER);
             addEvent(r);
-            log.debug(String.format("Mat-->Registers a newly created socket with the poller {0}.KeyAttachment.interestOps {1}.PollerEvent.intOps {2}",this.toString(),"OP_READ","OP_REGISTER"));
+            log.debug(String.format("Mat-->Registers a newly created socket with the poller %s.KeyAttachment.interestOps %s.PollerEvent.intOps %s",this.toString(),"OP_READ","OP_REGISTER"));
         }
 
         public KeyAttachment cancelledKey(SelectionKey key, SocketStatus status) {
+            log.debug(String.format("Mat-->Cancelle key %s",key.toString(),status));
             KeyAttachment ka = null;
             try {
                 if ( key == null ) return null;//nothing to do
