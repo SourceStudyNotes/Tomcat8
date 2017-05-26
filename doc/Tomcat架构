@@ -1,0 +1,7 @@
+Servlet 应用
+
+
+Catalina（Servlet容器实现）--- 通过Connector与用户交互，通过Adapter与Coyote交互。
+
+
+Coyote（底层协议相关实现，http11,ajp）每个协议都实现ProtocolHandler接口
