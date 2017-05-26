@@ -543,7 +543,9 @@ public class StandardService extends LifecycleMBeanBase implements Service {
      */
     @Override
     protected void initInternal() throws LifecycleException {
-
+        if(log.isDebugEnabled()){
+            log.debug("Mat-->"+this.getClass().getName()+" initInternal.");
+        }
         super.initInternal();
 
         if (container != null) {

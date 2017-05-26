@@ -5,3 +5,8 @@ Catalina（Servlet容器实现）--- 通过Connector与用户交互，通过Adap
 
 
 Coyote（底层协议相关实现，http11,ajp）每个协议都实现ProtocolHandler接口
+
+
+
+启动顺序：Catalina.start->StandardServer->StandardService->StandardEngine->StandardHost->StandardContext->WebappLoader->StandardWrapper
+初始化顺序（initInternal）：StandardServer->StandardService->StandardEngine->StandardHost->StandardContext->StandardWrapper

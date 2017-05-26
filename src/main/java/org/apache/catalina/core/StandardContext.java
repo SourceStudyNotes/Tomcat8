@@ -5024,7 +5024,7 @@ public class StandardContext extends ContainerBase
     protected synchronized void startInternal() throws LifecycleException {
 
         if(log.isDebugEnabled())
-            log.debug("Starting " + getBaseName());
+            log.debug("Mat-->Starting " + getBaseName());
 
         // Send j2ee.state.starting notification
         if (this.getObjectName() != null) {

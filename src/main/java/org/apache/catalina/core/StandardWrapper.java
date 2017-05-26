@@ -1714,7 +1714,9 @@ public class StandardWrapper extends ContainerBase
      */
     @Override
     protected synchronized void startInternal() throws LifecycleException {
-
+        if(log.isDebugEnabled()){
+            log.debug("Mat-->Starting StandardWrapper！");
+        }
         // Send j2ee.state.starting notification
         if (this.getObjectName() != null) {
             Notification notification = new Notification("j2ee.state.starting",
