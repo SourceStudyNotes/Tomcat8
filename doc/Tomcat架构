@@ -10,3 +10,28 @@ Coyote（底层协议相关实现，http11,ajp）每个协议都实现ProtocolHa
 
 启动顺序：Catalina.start->StandardServer->StandardService->StandardEngine->StandardHost->StandardContext->WebappLoader->StandardWrapper
 初始化顺序（initInternal）：StandardServer->StandardService->StandardEngine->StandardHost->StandardContext->StandardWrapper
+
+
+
+org.apache.coyote.Processor(Common interface for processors of all protocols.)有状态的对象，和每个连接绑定的。
+org.apache.tomcat.util.net.Handler 无状态，和EndPoint绑定。
+
+
+Server(A Server element represents the entire Catalina servlet container.)
+
+Service(A Service is a group of one or more Connectors that share a single Container to process their incoming requests.) 一个Service只能有一个Container
+
+------------Container start------------
+
+Engine(Catalina servlet engine)
+
+Host(Virtual host in the Catalina servlet engine)
+
+Context(individual web application)
+
+Wrapper(individual servlet definition)
+
+-------------Container end-------------
+
+
+
