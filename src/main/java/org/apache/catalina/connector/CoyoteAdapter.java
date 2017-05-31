@@ -809,6 +809,7 @@ public class CoyoteAdapter implements Adapter {
             // Parse the path parameters. This will:
             //   - strip out the path parameters
             //   - convert the decodedURI to bytes
+            //https://doriantaylor.com/policy/http-url-path-parameter-syntax
             parsePathParameters(req, request);
 
             // URI decoding
