@@ -492,6 +492,7 @@ public abstract class AbstractNioInputBuffer<S> extends AbstractInputBuffer<S> {
 
         //
         // Reading the header value (which can be spanned over multiple lines)
+        // 关于header中文的问题：http://borninsummer.com/2016/12/07/http-charset/
         //
 
         while (headerParsePos == HeaderParsePosition.HEADER_VALUE_START ||
