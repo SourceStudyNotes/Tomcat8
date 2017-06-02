@@ -788,7 +788,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             log.debug(String.format("Mat-->Run poller event %s",this.toString()));
             if ( interestOps == OP_REGISTER ) {
                 try {
-                    socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);
+                    socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);//注册读事件，等待客户端数据到来
 
                 } catch (Exception x) {
                     log.error("", x);
@@ -1114,7 +1114,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                             processSendfile(sk,attachment, false);
                         } else {
                             if ( isWorkerAvailable() ) {
-                                unreg(sk, attachment, sk.readyOps());
+                                unreg(sk, attachment, sk.readyOps());//第一次收到数据，将这个链接从Poller的Selector解绑。下次也许会注册到InternalNioInputBuffer的NioSelectorPool中读取后续的数据。
                                 boolean closeSocket = false;
                                 // Read goes before write
                                 if (sk.isReadable()) {
