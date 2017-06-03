@@ -1,3 +1,5 @@
 /tomcat.iml
 *.class
 target/*
+.idea/*
+output/logs/*
