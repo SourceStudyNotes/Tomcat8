@@ -844,7 +844,7 @@ public class StandardHost extends ContainerBase implements Host {
     @Override
     protected synchronized void startInternal() throws LifecycleException {
         if(log.isDebugEnabled()){
-            log.debug("Mat-->Starting host！");
+            log.info("Mat-->Starting host！");
         }
         // Set error report valve
         String errorValve = getErrorReportValveClass();

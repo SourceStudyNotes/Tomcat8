@@ -531,7 +531,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             socket.configureBlocking(false);
             Socket sock = socket.socket();
             socketProperties.setProperties(sock);
-            log.debug(String.format("Mat-->setSocketOptions:%s",socketProperties.toString()));
+            log.info(String.format("Mat-->setSocketOptions:%s",socketProperties.toString()));
             NioChannel channel = nioChannels.pop();
             if ( channel == null ) {
                 // SSL setup
@@ -618,10 +618,10 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             else sc.reset(attachment, status);
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
-                log.debug(String.format("Mat-->ProcessSocket %s in executor %s",sc.ka.getSocket().toString(),executor.toString()));
+                log.info(String.format("Mat-->ProcessSocket %s in executor %s",sc.ka.getSocket().toString(),executor.toString()));
                 executor.execute(sc);
             } else {
-                log.debug(String.format("Mat-->ProcessSocket %s in %s",sc.ka.getSocket().toString(),this.toString()));
+                log.info(String.format("Mat-->ProcessSocket %s in %s",sc.ka.getSocket().toString(),this.toString()));
                 sc.run();
             }
         } catch (RejectedExecutionException ree) {
@@ -682,7 +682,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                         // Accept the next incoming connection from the server
                         // socket
                         socket = serverSock.accept();
-                        log.debug(String.format("Mat-->Accept new connection:%s",socket));
+                        log.info(String.format("Mat-->Accept new connection:%s",socket));
 
                     } catch (IOException ioe) {
                         //we didn't get a socket
@@ -785,8 +785,8 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
 
         @Override
         public void run() {
-            log.debug(String.format("Mat-->Run poller event %s",this.toString()));
             if ( interestOps == OP_REGISTER ) {
+                log.info(String.format("Mat-->Run poller event %s，OP_REGISTER.",this.toString()));
                 try {
                     socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);//注册读事件，等待客户端数据到来
 
@@ -794,6 +794,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
                     log.error("", x);
                 }
             } else {
+                log.info(String.format("Mat-->Run poller event %s，OTHER.",this.toString()));
                 final SelectionKey key = socket.getIOChannel().keyFor(socket.getPoller().getSelector());
                 try {
                     boolean cancel = false;
@@ -880,6 +881,7 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
          * @param socket to add to the poller
          */
         public void add(final NioChannel socket) {
+            log.info(String.format("Mat-->Add poller event,socket:%s,SelectionKey.OP_READ.",socket));
             add(socket,SelectionKey.OP_READ);
         }
 
@@ -937,11 +939,11 @@ public class NioEndpoint extends AbstractEndpoint<NioChannel> {
             if ( r==null) r = new PollerEvent(socket,ka,OP_REGISTER);
             else r.reset(socket,ka,OP_REGISTER);
             addEvent(r);
-            log.debug(String.format("Mat-->Registers a newly created socket with the poller %s.KeyAttachment.interestOps %s.PollerEvent.intOps %s",this.toString(),"OP_READ","OP_REGISTER"));
+            log.info(String.format("Mat-->Registers a newly created socket with the poller %s.KeyAttachment.interestOps %s.PollerEvent.intOps %s",this.toString(),"OP_READ","OP_REGISTER"));
         }
 
         public KeyAttachment cancelledKey(SelectionKey key, SocketStatus status) {
-            log.debug(String.format("Mat-->Cancelle key %s",key.toString(),status));
+            log.info(String.format("Mat-->Cancelle key %s",key.toString(),status));
             KeyAttachment ka = null;
             try {
                 if ( key == null ) return null;//nothing to do

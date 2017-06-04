@@ -873,7 +873,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase
     @Override
     protected void initInternal() throws LifecycleException {
         if(log.isDebugEnabled()){
-            log.debug("Mat-->"+this.getClass().getName()+" initInternal.");
+            log.info("Mat-->"+this.getClass().getName()+" initInternal.");
         }
         BlockingQueue<Runnable> startStopQueue = new LinkedBlockingQueue<>();
         startStopExecutor = new ThreadPoolExecutor(

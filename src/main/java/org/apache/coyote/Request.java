@@ -22,6 +22,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.ReadListener;
 
+import org.apache.catalina.core.StandardContext;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.buf.ByteChunk;
 import org.apache.tomcat.util.buf.MessageBytes;
 import org.apache.tomcat.util.buf.UDecoder;
@@ -58,7 +61,7 @@ import org.apache.tomcat.util.res.StringManager;
  * @author Remy Maucherat
  */
 public final class Request {
-
+    private static final Log log = LogFactory.getLog(Request.class);
     private static final StringManager sm =
             StringManager.getManager(Constants.Package);
 
@@ -302,6 +305,7 @@ public final class Request {
 
 
     public void setContentLength(long len) {
+        log.info(String.format("Mat-->setContentLength:%s",len));
         this.contentLength = len;
     }
 
@@ -317,12 +321,13 @@ public final class Request {
 
     public long getContentLengthLong() {
         if( contentLength > -1 ) {
+            log.info(String.format("Mat-->getContentLengthLong:%s",contentLength));
             return contentLength;
         }
 
         MessageBytes clB = headers.getUniqueValue("content-length");
         contentLength = (clB == null || clB.isNull()) ? -1 : clB.getLong();
-
+        log.info(String.format("Mat-->getContentLengthLong:%s",contentLength));
         return contentLength;
     }
 

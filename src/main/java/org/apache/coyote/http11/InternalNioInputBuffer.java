@@ -174,7 +174,7 @@ public class InternalNioInputBuffer extends AbstractNioInputBuffer<NioChannel> {
             throws IOException {
 
             if (pos >= lastValid) {
-                if (!fill(true)) //read body, must be blocking, as the thread is inside the app
+                if (!fill(true)) //read body, must be blocking, as the thread is inside the app，读取http body使用阻塞模式去读取。使用业务线程去阻塞读取。
                     return -1;
             }
 

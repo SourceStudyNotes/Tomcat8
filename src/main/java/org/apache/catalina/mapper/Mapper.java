@@ -678,7 +678,7 @@ public final class Mapper {
      */
     public void map(MessageBytes host, MessageBytes uri, String version,
                     MappingData mappingData) throws IOException {
-
+        log.info(String.format("Mat-->map.MessageBytes host:%s, MessageBytes uri:%s, String version:%s,MappingData mappingData:%s)",host,uri,version,mappingData));
         if (host.isNull()) {
             host.getCharChunk().append(defaultHostName);
         }
@@ -703,7 +703,7 @@ public final class Mapper {
      */
     public void map(Context context, MessageBytes uri,
             MappingData mappingData) throws IOException {
-
+        log.info(String.format("Mat-->map.Context context:%s, MessageBytes uri:%s,MappingData mappingData:%s)",context,uri,mappingData));
         ContextVersion contextVersion =
                 contextObjectToContextVersionMap.get(context);
         uri.toChars();

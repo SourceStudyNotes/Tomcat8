@@ -758,7 +758,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     @Override
     protected void startInternal() throws LifecycleException {
         if(log.isDebugEnabled()){
-            log.debug("Mat-->Starting StandardServer！");
+            log.info("Mat-->Starting StandardServer！");
         }
         fireLifecycleEvent(CONFIGURE_START_EVENT, null);
         setState(LifecycleState.STARTING);
@@ -805,7 +805,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     protected void initInternal() throws LifecycleException {
 
         if(log.isDebugEnabled()){
-            log.debug("Mat-->"+this.getClass().getName()+" initInternal.");
+            log.info("Mat-->"+this.getClass().getName()+" initInternal.");
         }
         super.initInternal();
 

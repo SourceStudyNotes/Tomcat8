@@ -3145,7 +3145,7 @@ public class Request
                     formData = new byte[len];
                 }
                 try {
-                    if (readPostBody(formData, len) != len) {
+                    if (readPostBody(formData, len) != len) {//阻塞读取Postbody数据，可能会返回-1
                         parameters.setParseFailedReason(FailReason.REQUEST_BODY_INCOMPLETE);
                         return;
                     }

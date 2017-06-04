@@ -22,6 +22,8 @@ import org.apache.catalina.Host;
 import org.apache.catalina.Wrapper;
 import org.apache.tomcat.util.buf.MessageBytes;
 
+import java.util.Arrays;
+
 /**
  * Mapping data.
  *
@@ -57,4 +59,20 @@ public class MappingData {
         redirectPath.recycle();
     }
 
+    @Override
+    public String toString() {
+        return "MappingData{" +
+                "host=" + host +
+                ", context=" + context +
+                ", contextSlashCount=" + contextSlashCount +
+                ", contexts=" + Arrays.toString(contexts) +
+                ", wrapper=" + wrapper +
+                ", jspWildCard=" + jspWildCard +
+                ", contextPath=" + contextPath +
+                ", requestPath=" + requestPath +
+                ", wrapperPath=" + wrapperPath +
+                ", pathInfo=" + pathInfo +
+                ", redirectPath=" + redirectPath +
+                '}';
+    }
 }

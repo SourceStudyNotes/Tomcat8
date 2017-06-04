@@ -13,7 +13,7 @@ Coyote（底层协议相关实现，http11,ajp）每个协议都实现ProtocolHa
 
 
 
-org.apache.coyote.Processor(Common interface for processors of all protocols.)有状态的对象，和每个连接绑定的。
+org.apache.coyote.Processor(Common interface for processors of all protocols.)有状态的对象，和每个连接绑定的，生命周期是一个请求/响应。
 org.apache.tomcat.util.net.Handler 无状态，和EndPoint绑定。
 
 
@@ -25,13 +25,16 @@ Service(A Service is a group of one or more Connectors that share a single Conta
 
 Engine(Catalina servlet engine)
 
-Host(Virtual host in the Catalina servlet engine)
+Host(Virtual host in the Catalina servlet engine) Mapper
 
 Context(individual web application)
 
 Wrapper(individual servlet definition)
 
 -------------Container end-------------
+
+
+
 
 
 

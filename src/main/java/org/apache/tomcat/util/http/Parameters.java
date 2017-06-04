@@ -112,6 +112,7 @@ public final class Parameters {
 
 
     public void setParseFailedReason(FailReason failReason) {
+        log.info(String.format("Mat-->setParseFailedReason %s.",failReason));
         if (this.parseFailedReason == null) {
             this.parseFailedReason = failReason;
         }

@@ -496,7 +496,7 @@ public class Connector extends LifecycleMBeanBase  {
     }
 
     protected boolean isParseBodyMethod(String method) {
-
+        log.info(String.format("Mat-->isParseBodyMethod.parseBodyMethodsSet:%s,Method:%s",parseBodyMethodsSet,method));
         return parseBodyMethodsSet.contains(method);
 
     }

@@ -224,6 +224,7 @@ public class Http11NioProtocol extends AbstractHttp11JsseProtocol<NioChannel> {
                 socket.setTimeout(getProtocol().getKeepAliveTimeout());
                 socket.getSocket().getPoller().add(socket.getSocket());
             }
+            getLog().info(String.format("Mat-->Expected to be used by the handler once the processor is no longer required.IsSocketClosing %s,AddToPoller: %s",isSocketClosing,addToPoller));
         }
 
 
@@ -267,6 +268,7 @@ public class Http11NioProtocol extends AbstractHttp11JsseProtocol<NioChannel> {
                     proto.getMaxExtensionSize(), proto.getMaxSwallowSize());
             proto.configureProcessor(processor);
             register(processor);
+            log.info(String.format("Mat-->createProcessor:%s",processor));
             return processor;
         }
 

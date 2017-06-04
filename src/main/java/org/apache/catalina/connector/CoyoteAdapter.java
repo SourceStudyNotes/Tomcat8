@@ -478,7 +478,7 @@ public class CoyoteAdapter implements Adapter {
 
         Request request = (Request) req.getNote(ADAPTER_NOTES);
         Response response = (Response) res.getNote(ADAPTER_NOTES);
-
+        log.info("Mat-->service(org.apache.coyote.Request req,org.apache.coyote.Response res).");
         if (request == null) {
 
             // Create objects

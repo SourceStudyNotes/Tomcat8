@@ -480,7 +480,13 @@
   <!-- A filter that triggers request parameters parsing and rejects the    -->
   <!-- request if some parameters were skipped because of parsing errors or -->
   <!-- request size limitations.                                            -->
-<!--
+
+    <filter-mapping>
+        <filter-name>failedRequestFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
     <filter>
         <filter-name>failedRequestFilter</filter-name>
         <filter-class>
@@ -488,7 +494,7 @@
         </filter-class>
         <async-supported>true</async-supported>
     </filter>
--->
+
 
 
   <!-- NOTE: An SSI Servlet is also available as an alternative SSI         -->
@@ -569,12 +575,8 @@
 -->
 
   <!-- The mapping for the Failed Request Filter -->
-<!--
-    <filter-mapping>
-        <filter-name>failedRequestFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
--->
+
+
 
   <!-- The mapping for the SSI Filter -->
 <!--

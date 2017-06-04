@@ -56,6 +56,7 @@ public class FailedRequestFilter extends FilterBase implements CometFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+        log.info("Mat-->FailedRequestFilter.doFilter");
         if (!isGoodRequest(request)) {
             FailReason reason = (FailReason) request.getAttribute(
                     Globals.PARAMETER_PARSE_FAILED_REASON_ATTR);
@@ -111,6 +112,7 @@ public class FailedRequestFilter extends FilterBase implements CometFilter {
     }
 
     private boolean isGoodRequest(ServletRequest request) {
+        log.info(String.format("Mat-->isGoodRequest %s,PARAMETER_PARSE_FAILED_ATTR:%s",request,request.getAttribute(Globals.PARAMETER_PARSE_FAILED_ATTR)));
         // Trigger parsing of parameters
         request.getParameter("none");
         // Detect failure
