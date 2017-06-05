@@ -736,7 +736,7 @@ public final class Mapper {
 
         // Virtual host mapping
         MappedHost[] hosts = this.hosts;
-        MappedHost mappedHost = exactFindIgnoreCase(hosts, host);
+        MappedHost mappedHost = exactFindIgnoreCase(hosts, host);//找到对应Host主机。
         if (mappedHost == null) {
             if (defaultHostName == null) {
                 return;
@@ -749,7 +749,7 @@ public final class Mapper {
         mappingData.host = mappedHost.object;
 
         // Context mapping
-        ContextList contextList = mappedHost.contextList;
+        ContextList contextList = mappedHost.contextList;//找到对应的Context（项目目录）
         MappedContext[] contexts = contextList.contexts;
         int pos = find(contexts, uri);
         if (pos == -1) {

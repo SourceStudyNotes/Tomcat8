@@ -25,7 +25,7 @@ Service(A Service is a group of one or more Connectors that share a single Conta
 
 Engine(Catalina servlet engine)
 
-Host(Virtual host in the Catalina servlet engine) Mapper
+Host(Virtual host in the Catalina servlet engine)
 
 Context(individual web application)
 
