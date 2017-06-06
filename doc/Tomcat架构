@@ -34,6 +34,9 @@ Wrapper(individual servlet definition)
 -------------Container end-------------
 
 
+RequestBody流式获取的时候InputFilter来根据Content-Length和transfer-encoding: chunked决定消息结束标识符，通过返回-1表示一个消息的结束。
+
+
 
 
 
