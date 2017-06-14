@@ -83,11 +83,13 @@
 			<version>1.0.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
-			<groupId>servletapi</groupId>
-			<artifactId>servletapi</artifactId>
-			<version>2.3</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>geronimo-spec</groupId>

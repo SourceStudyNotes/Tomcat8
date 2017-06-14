@@ -34,9 +34,19 @@ Wrapper(individual servlet definition)
 -------------Container end-------------
 
 
-RequestBody流式获取的时候InputFilter来根据Content-Length和transfer-encoding: chunked决定消息结束标识符，通过返回-1表示一个消息的结束。
+请求数据的处理：
+org.apache.coyote.http11.AbstractHttp11Processor.prepareRequest
+    根据消息头，建立起必要的数据处理链。
+
+    RequestBody流式获取的时候InputFilter来根据Content-Length和transfer-encoding: chunked决定消息结束标识符，通过返回-1表示一个消息的结束。
+
+    OutputFilter处理分块传输和Gzip压缩传输等。
 
 
+
+异步处理:
+    ActionCode.DISPATCH_EXECUTE
+    ActionCode.ASYNC_DISPATCH
 
 
 

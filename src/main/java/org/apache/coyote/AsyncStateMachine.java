@@ -106,6 +106,8 @@ public class AsyncStateMachine {
         StringManager.getManager(Constants.Package);
 
     private static enum AsyncState {
+        //isAsync,isStarted,isCompleting,isDispatching,pauseNonContainerThread
+
         DISPATCHED   (false, false, false, false, false),
         STARTING     (true,  true,  false, false, true),
         STARTED      (true,  true,  false, false, false),

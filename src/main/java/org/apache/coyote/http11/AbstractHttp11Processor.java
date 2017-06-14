@@ -680,7 +680,7 @@ public abstract class AbstractHttp11Processor<S> extends AbstractProcessor<S> {
      * supported, a 501 response will be returned to the client.
      */
     private void addInputFilter(InputFilter[] inputFilters, String encodingName) {
-
+        getLog().info(String.format("Mat-->addActiveFilter,encodingName:%s",encodingName));
         // Trim provided encoding name and convert to lower case since transfer
         // encoding names are case insensitive. (RFC2616, section 3.6)
         encodingName = encodingName.trim().toLowerCase(Locale.ENGLISH);
