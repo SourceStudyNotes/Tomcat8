@@ -669,7 +669,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
             }
 
             wrapper.setAsync(false);
-            ContainerThreadMarker.set();
+            ContainerThreadMarker.set();//设置容器标识
 
             try {
                 if (processor == null) {
@@ -688,7 +688,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     if (status == SocketStatus.CLOSE_NOW) {
                         processor.errorDispatch();
                         state = SocketState.CLOSED;
-                    } else if (dispatches != null) {
+                    } else if (dispatches != null) {//处理分发下来读写请求
                         // Associate the processor with the connection as
                         // these calls may result in a nested call to process()
                         connections.put(socket, processor);
@@ -734,7 +734,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                     }
 
                     if (state != SocketState.CLOSED && processor.isAsync()) {
-                        state = processor.asyncPostProcess();
+                        state = processor.asyncPostProcess();//Mat.AsyncStateMachine-->AsyncState.STARTING->AsyncState.STARTED
                     }
 
                     if (state == SocketState.UPGRADING) {
@@ -783,14 +783,14 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                         state == SocketState.UPGRADING ||
                         dispatches != null && state != SocketState.CLOSED);
 
-                if (state == SocketState.LONG) {
+                if (state == SocketState.LONG) {//后续还有数据要读取，将Processor和处理的socket继续做映射。
                     // In the middle of processing a request/response. Keep the
                     // socket associated with the processor. Exact requirements
                     // depend on type of long poll
                     connections.put(socket, processor);
                     longPoll(wrapper, processor);
                     getLog().info("Mat-->SocketState:SocketState.LONG.In the middle of processing a request/response. Keep the socket associated with the processor. Exact requirements depend on type of long poll!");
-                } else if (state == SocketState.OPEN) {
+                } else if (state == SocketState.OPEN) {//一个请求数据（header+body）已经处理完成，将processor和处理的socket解绑以供后续连接使用
                     // In keep-alive but between requests. OK to recycle
                     // processor. Continue to poll for the next request.
                     connections.remove(socket);
@@ -855,7 +855,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                 getLog().error(
                         sm.getString("abstractConnectionHandler.error"), e);
             } finally {
-                ContainerThreadMarker.clear();
+                ContainerThreadMarker.clear();//删除容器标识
             }
 
             // Make sure socket/processor is removed from the list of current

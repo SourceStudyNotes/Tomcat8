@@ -238,13 +238,13 @@ public enum ActionCode {
 
     /**
      * Indicates that the container needs to trigger a call to onDataAvailable()
-     * for the registered non-blocking read listener.
+     * for the registered non-blocking read listener.如果调用的线程不是容器线程的话，直接调用DISPATCH_EXECUTE执行。
      */
     DISPATCH_READ,
 
     /**
      * Indicates that the container needs to trigger a call to onWritePossible()
-     * for the registered non-blocking write listener.
+     * for the registered non-blocking write listener.如果调用的线程不是容器线程的话，直接调用DISPATCH_EXECUTE执行。
      */
     DISPATCH_WRITE,
 
