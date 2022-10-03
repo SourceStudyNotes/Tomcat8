@@ -134,8 +134,7 @@ public class ExpandWar {
                 JarEntry jarEntry = jarEntries.nextElement();
                 String name = jarEntry.getName();
                 File expandedFile = new File(docBase, name);
-                if (!expandedFile.getCanonicalPath().startsWith(
-                        canonicalDocBasePrefix)) {
+                if (!expandedFile.getCanonicalFile().toPath().startsWith(canonicalDocBasePrefix)) {
                     // Trying to expand outside the docBase
                     // Throw an exception to stop the deployment
                     throw new IllegalArgumentException(
@@ -220,8 +219,7 @@ public class ExpandWar {
                 JarEntry jarEntry = jarEntries.nextElement();
                 String name = jarEntry.getName();
                 File expandedFile = new File(docBase, name);
-                if (!expandedFile.getCanonicalPath().startsWith(
-                        canonicalDocBasePrefix)) {
+                if (!expandedFile.getCanonicalFile().toPath().startsWith(canonicalDocBasePrefix)) {
                     // Entry located outside the docBase
                     // Throw an exception to stop the deployment
                     throw new IllegalArgumentException(
